@@ -15,7 +15,7 @@ const CartPage = () => {
         onValue(ref(db, `cart/${uid}`), snapshot=>{
             let rows=[];
             snapshot.forEach(row=>{
-                rows,push({key: row.key, ...row.val()});
+                rows.push({key: row.key, ...row.val()});
             });
             console.log(rows);
             setBooks(rows);
