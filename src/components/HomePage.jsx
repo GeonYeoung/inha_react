@@ -21,12 +21,12 @@ const HomePage = () => {
     const[query, setQuery] = useState('리엑트');
     const[page, setPage] = useState(1);
     const[last, setLast] = useState(1);
-    const apiKey = process.env.REACT.APP_KAKAO_REST_KEY;
+    const apiKey = process.env.REACT_APP_KAKAO_REST_KEY;
 
 
     const callAPI = async() =>{
         const url="https://dapi.kakao.com/v3/search/book?target=title"
-        const config = { headers:{Authorizaion:"KakaoAK" + apiKey}, 
+        const config = { headers:{Authorization:"KakaoAK " + apiKey}, 
             params:{query:query,
                 size:12,
                 page:page}
@@ -40,7 +40,7 @@ const HomePage = () => {
 
     const checkHeart = () => {
         setLoading(true);
-        onValue (ref(db, `heart/$(uid)`), snapshot=>{
+        onValue (ref(db, `heart/${uid}`), snapshot=>{
             const rows = [];
             snapshot.forEach(row=>{
                 rows.push(row.val().isbn);
@@ -58,12 +58,12 @@ const HomePage = () => {
         checkHeart();
     }, [uid]);
     useEffect(()=>{
-        const titleElement = document.getElementByTagName('title')[0];
+        const titleElement = document.getElementsByTagName('title')[0];
         titleElement.innerHTML = '홈페이지';
     },[]);
 
     const onSubmit = (e) => {
-         e.preventDefarult();
+         e.preventDefault();
          if(query===''){
             alert("검색어를 입력하세요!");
          }else{
@@ -71,7 +71,7 @@ const HomePage = () => {
          }
     }
 
-    const onClickRegHeart = (b00k) => {
+    const onClickRegHeart = (book) => {
         remove(ref(db, `heart/${uid}/${book.isbn}`));
         alert("좋아요 취소!")
     }
@@ -115,15 +115,16 @@ const HomePage = () => {
                     <Form onSubmit={onSubmit}/>
                         <InputGroup>
                             <Form.Control onChange={(e)=>setQuery(e.target.value)} value={query}/>
+                            <Button type="submit">검색</Button>
                         </InputGroup>
                 </Col>
             </Row>
             <Row>
-                {documents.compatMode(doc=>
+                {documents.map(doc=>
                     <Col lg={2} md={3} xs={6} className='mb-2' key={doc.isbn}>
                         <Card>
                             <Card.Body>
-                                <BookPage doc={doc}/>
+                                <BookPage book={doc}/>
                                 <div className='text-end heart'>
                                     {heart.includes(doc.isbm) ?
                                         <FaHeart onClick={()=>onClickHeart(doc)}/>

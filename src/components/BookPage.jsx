@@ -18,9 +18,9 @@ const BookPage = ({doc}) => {
         backdrop="static"
         keyboard={false}
         size='lg'>
-            <Modalodal.Header closeButton>
+            <Modal.Header closeButton>
                 <Modal.Title>도서정보</Modal.Title>
-            </Modalodal.Header>   
+            </Modal.Header>   
             <Modal.Body>
                 <Row>
                     <Col>
