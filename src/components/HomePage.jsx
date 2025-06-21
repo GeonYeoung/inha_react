@@ -92,7 +92,7 @@ const HomePage = () => {
                 if(snapshot.exists()){
                     alert('이미 장바구니에 존재합니다.');
                 }else{
-                    const data = moment(new DataTransfer()).format('YYYY-MM-DD HH:mm-ss');
+                    const data = moment(new Date()).format('YYYY-MM-DD HH:mm-ss');
                     setDocuments(ref(db,`cart/${uid}/${book.isbn}`), {...book,data});
                     alert('장바구니에 등록되었습니다.');
                 }
@@ -112,11 +112,12 @@ const HomePage = () => {
             <h1 className='my-5 text-center'>홈페이지</h1>
             <Row className='mb-2'>
                 <Col>
-                    <Form onSubmit={onSubmit}/>
+                    <Form onSubmit={onSubmit}>
                         <InputGroup>
                             <Form.Control onChange={(e)=>setQuery(e.target.value)} value={query}/>
                             <Button type="submit">검색</Button>
                         </InputGroup>
+                    </Form>    
                 </Col>
             </Row>
             <Row>
@@ -126,7 +127,7 @@ const HomePage = () => {
                             <Card.Body>
                                 <BookPage book={doc}/>
                                 <div className='text-end heart'>
-                                    {heart.includes(doc.isbm) ?
+                                    {heart.includes(doc.isbn) ?
                                         <FaHeart onClick={()=>onClickHeart(doc)}/>
                                         :
                                         <FaRegHeart onClick={()=>onClickRegHeart(doc)}/>

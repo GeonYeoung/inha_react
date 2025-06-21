@@ -13,7 +13,7 @@ const Menubar = () => {
     const basename = process.env.PUBLIC_URL;
     
     const onClickLogout = (e) => {
-        e.preverntDefault();
+        e.preventDefault();
         if(window.confirm('정말 로그아웃 하실래요?')){
             sessionStorage.clear();
             nav('/');
