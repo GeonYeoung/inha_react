@@ -26,7 +26,7 @@ const HomePage = () => {
 
     const callAPI = async() =>{
         const url="https://dapi.kakao.com/v3/search/book?target=title"
-        const config = { headers:{Authorization:"KakaoAK " + apiKey}, 
+        const config = { headers:{Authorization: `KakaoAK ${apiKey}`}, 
             params:{query:query,
                 size:12,
                 page:page}
